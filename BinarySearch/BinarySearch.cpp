@@ -1,6 +1,7 @@
 /* Program: Binary Search
 Input: Sorted integer array and key to find
 Output: true if key is found in the array, false if the key is not found
+
 Author: Ankit Srivastava
 */
 #include <iostream>
