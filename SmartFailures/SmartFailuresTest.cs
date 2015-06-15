@@ -10,8 +10,10 @@ namespace Microsoft.Csi.Hqse.SmartFailures
         {
             string inputFilePath = ConfigurationManager.AppSettings.Get("InputFilePath");
             string outputFilePath = ConfigurationManager.AppSettings.Get("OutputFilePath");
+            string startInfoSection = ConfigurationManager.AppSettings.Get("StartInfoSection");
+            string smartFailureAttributeSection = ConfigurationManager.AppSettings.Get("SmartFailureAttributeSection");
 
-            SmartFailuresMain sm = new SmartFailuresMain(inputFilePath, outputFilePath);
+            SmartFailuresMain sm = new SmartFailuresMain(inputFilePath, outputFilePath, startInfoSection, smartFailureAttributeSection);
 
             // Parse file
             sm.Parse();

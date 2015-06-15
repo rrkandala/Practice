@@ -32,7 +32,7 @@ namespace Microsoft.Csi.Hqse.SmartFailures
 
         internal List<SmartFailuresProperty> SmartFailuresProperties { get; set; }
 
-        public SmartFailures(string filePath)
+        public SmartFailures()
         {
             SmartFailuresProperties = new List<SmartFailuresProperty>();
         }
