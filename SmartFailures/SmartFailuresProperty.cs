@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Microsoft.Csi.Hqse.SmartFailures
+namespace SmartFailures
 {
     public class SmartFailuresProperty
     {

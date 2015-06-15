@@ -5,7 +5,7 @@ using System.Configuration;
 using System.IO;
 using System.Text;
 
-namespace Microsoft.Csi.Hqse.SmartFailures
+namespace SmartFailures
 {
     /// <summary>
     /// Main class containing the smart failures parsing logic

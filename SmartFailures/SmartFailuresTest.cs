@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace Microsoft.Csi.Hqse.SmartFailures
+namespace SmartFailures
 {
     public class SmartFailuresTest
     {
