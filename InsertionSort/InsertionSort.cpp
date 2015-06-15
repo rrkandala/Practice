@@ -61,6 +61,7 @@ int main()
 	return 0;
 }
 
+// Go back from current position, find the right position left of the current position and insert the element
 void insertionsort(int *A, int size)
 {
 	if(size > 1)
@@ -84,6 +85,7 @@ void insertionsort(int *A, int size)
 	}
 }
 
+// Printing the array
 void printarray(int *A, int size)
 {
 	for(int i = 0; i < size; i++)
