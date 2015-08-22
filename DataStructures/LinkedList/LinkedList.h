@@ -14,10 +14,28 @@ class Node
 	
 	private:
 		T data;
-		Node *next;
+		Node* next;
 	
 	public:
+		Node();
+		Node(T val);
+		Node(T val, Node* pNext);
 		
+		T getData();
+		Node<T>* getNext();
+};
+
+template <class T>
+class LinkedList
+{
+	private:
+		Node<T> *head;
+	public:
+		bool addNode(T d);
+		bool deleteNode(T d);
+		void traverse();
+		void reverse();
+		bool search(T d);
 };
 
 #endif
