@@ -47,6 +47,28 @@ void Sorting::bubblesort()
 	}
 }
 
+void Sorting::selectionsort()
+{
+	int max;
+	
+	int j = size-1;
+	
+	for(int i = size-1; i >= 0; i--)
+	{
+		max = i;
+		
+		for(int j = 0; j < i; j++)
+		{
+			if(d[max] < d[j])
+			{
+				max = j;
+			}
+		}
+		
+		swap(i, max);
+	}
+}
+
 void Sorting::insert()
 {
 	for(int i = 0; i < size; i++)
@@ -75,6 +97,7 @@ int main()
 {
 	Sorting *obj = new Sorting(5);
 	obj->insert();
-	obj->bubblesort();
+	cout << "Selection Sort" << endl;
+	obj->selectionsort();
 	obj->print();
 }
