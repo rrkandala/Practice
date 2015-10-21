@@ -17,6 +17,7 @@ class Sorting
 		void insert();
 		void bubblesort();
 		void selectionsort();
+		void insertionsort();
 		void print();
 		void swap(int i, int j);
 };
@@ -33,10 +34,12 @@ Sorting::Sorting(int n)
 	d = new int[n];
 }
 
+// Bubble Sort 
 void Sorting::bubblesort()
 {
 	for(int i = 0; i < size; i++)
 	{
+		// Compares and swaps a lot of times for no need
 		for(int j = i + 1; j < size; j++)
 		{
 			if(d[i] > d[j])
@@ -47,6 +50,7 @@ void Sorting::bubblesort()
 	}
 }
 
+// Selection Sort
 void Sorting::selectionsort()
 {
 	int max;
@@ -57,6 +61,7 @@ void Sorting::selectionsort()
 	{
 		max = i;
 		
+		// Finds max for decreasing length of array
 		for(int j = 0; j < i; j++)
 		{
 			if(d[max] < d[j])
@@ -66,6 +71,33 @@ void Sorting::selectionsort()
 		}
 		
 		swap(i, max);
+	}
+}
+
+// Insertion Sort
+void Sorting::insertionsort()
+{
+	int temp = 0;
+	int j = 0;
+	
+	if (size > 1)
+	{
+		for(int i = 1; i < size; i++)
+		{
+			j = i-1;
+			temp = d[i];
+			
+			// Shifting to the right to make way for element to be placed in correct position
+			// This is why insertion sort does so well on nearly sorted arrays
+			// Also, notice that insertion sort requires only shifts and no swaps
+			while(j >= 0 && d[j] > temp)
+			{
+				d[j+1] = d[j];
+				j--;
+			}
+			
+			d[j+1] = temp;
+		}
 	}
 }
 
@@ -97,7 +129,7 @@ int main()
 {
 	Sorting *obj = new Sorting(5);
 	obj->insert();
-	cout << "Selection Sort" << endl;
-	obj->selectionsort();
+	cout << "Insertion Sort" << endl;
+	obj->insertionsort();
 	obj->print();
 }
