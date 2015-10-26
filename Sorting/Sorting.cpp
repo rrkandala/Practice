@@ -20,6 +20,7 @@ public:
 	void insertionsort();
 	void mergesort(int p, int r);
 	void merge(int p, int r);
+	bool binarysearch(int left, int right, int elem);
 	void print();
 	void swap(int i, int j);
 };
@@ -179,6 +180,34 @@ void Sorting::insertionsort()
 	}
 }
 
+// Binary Search
+bool Sorting::binarysearch(int left, int right, int elem)
+{	
+	if(left > right)
+	{
+		return false;
+	}
+	else
+	{
+		int mid = (left/2) + (right/2);
+		
+		if(d[mid] == elem)
+		{
+			return true;
+		}
+		else if(d[mid] > elem)
+		{
+			binarysearch(left, mid - 1, elem);
+		}
+		else
+		{
+			binarysearch(mid + 1, right, elem);
+		}
+	}
+	
+	return false;
+}
+
 void Sorting::insert()
 {
 	for (int i = 0; i < size; i++)
@@ -205,11 +234,24 @@ void Sorting::print()
 
 int main()
 {
+	int elem = 0;
+	
 	Sorting *obj = new Sorting(5);
 	obj->insert();
 	cout << "Merge Sort" << endl;
 	obj->mergesort(0, 4);
 	obj->print();
-
+	
+	cout << "Element to find: ";
+	cin >> elem;
+	if(obj->binarysearch(0, 4, elem))
+	{
+		cout << "Element: " << elem << " found!" << endl;
+	}
+	else
+	{
+		cout << "Element: " << elem << " not found.." << endl;
+	}
+	
 	system("pause");
 }
