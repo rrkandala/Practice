@@ -27,6 +27,7 @@ public:
 	void insert(int d);
 	void removeduplicates();
 	void removeduplicateswithoutbuffer();
+	int kthtolastelement(int k);
 };
 
 linkedlist::linkedlist()
@@ -169,21 +170,57 @@ void linkedlist::removeduplicateswithoutbuffer()
 	}
 }
 
+int linkedlist::kthtolastelement(int k)
+{
+	node *currNode = head;
+	node *kthnode = head->next;
+	
+	int counter = 0;
+	
+	while(kthnode != NULL)
+	{
+		if(counter < k)
+		{
+			counter++;
+		}
+		else
+		{
+			break;
+		}
+		
+		kthnode = kthnode->next;
+	}
+	
+	while(kthnode != NULL)
+	{
+		currNode = currNode->next;
+		kthnode = kthnode->next;
+	}
+	
+	return currNode->data;
+}
+
 // Program execution starts here
 int main()
 {
 	linkedlist *obj = new linkedlist();
-	obj->insert(2);
-	obj->insert(2);
+	obj->insert(5);
+	obj->insert(4);
 	obj->insert(3);
 	obj->insert(2);
+	obj->insert(1);
 
-	cout << "Linked list before duplicate removal: " << endl;
-	obj->print();
-	obj->removeduplicateswithoutbuffer();
+	// cout << "Linked list before duplicate removal: " << endl;
+	// obj->print();
+	// obj->removeduplicateswithoutbuffer();
 
-	cout << "Linked list after removal: " << endl;
+	// cout << "Linked list after removal: " << endl;
+	// obj->print();
+	
+	cout << "Linked list: " << endl;
 	obj->print();
+	cout << "2nd element from last: " << endl;
+	cout << obj->kthtolastelement(1) << endl;
 
 	system("pause");
 }
