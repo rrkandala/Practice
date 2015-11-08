@@ -26,6 +26,7 @@ public:
 	void print();
 	void insert(int d);
 	void removeduplicates();
+	void removeduplicateswithoutbuffer();
 };
 
 linkedlist::linkedlist()
@@ -114,18 +115,72 @@ void linkedlist::removeduplicates()
 }
 
 
+// Remove duplicates from a linkedlist without the use of an additional buffer
+void linkedlist::removeduplicateswithoutbuffer()
+{
+	if (head == NULL)
+	{
+		return;
+	}
+
+	node *prevNode = head;
+	node *currNode;
+
+	int max = 0;
+
+	// Selection sort
+	while (prevNode != NULL)
+	{
+		node *min = prevNode;
+		currNode = prevNode->next;
+		while (currNode != NULL)
+		{
+			if (min->data > currNode->data)
+			{
+				min = currNode;
+			}
+
+			currNode = currNode->next;
+		}
+
+		int d = min->data;
+		min->data = prevNode->data;
+		prevNode->data = d;
+
+		prevNode = prevNode->next;
+	}
+
+	cout << "After sorting: " << endl;
+	print();
+
+	// Removing duplicates
+	prevNode = head;
+	currNode = head->next;
+
+	while (prevNode != NULL)
+	{
+		while (currNode != NULL && prevNode->data == currNode->data)
+		{
+			prevNode->next = currNode->next;
+			currNode = currNode->next;
+		}
+
+		prevNode = prevNode->next;
+	}
+}
+
 // Program execution starts here
 int main()
 {
 	linkedlist *obj = new linkedlist();
 	obj->insert(2);
+	obj->insert(2);
 	obj->insert(3);
-	obj->insert(3);
-	obj->insert(3);
+	obj->insert(2);
 
 	cout << "Linked list before duplicate removal: " << endl;
 	obj->print();
-	obj->removeduplicates();
+	obj->removeduplicateswithoutbuffer();
 
 	cout << "Linked list after removal: " << endl;
 	obj->print();
