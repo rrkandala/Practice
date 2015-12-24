@@ -1,3 +1,9 @@
+/*	Program: Singly Linked List implementation in C#
+ *	Author: Ankit Srivastava
+ *	
+ *	Date: 12/24/2015
+ */
+
 using System;
 
 /// <summary>
