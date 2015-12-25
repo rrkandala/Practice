@@ -6,9 +6,6 @@
 
 using System;
 
-/// <summary>
-/// Practising problems from Cracking the Coding Interview book
-/// </summary>
 namespace CrackingTheCodingInterview
 {
     public partial class SinglyLinkedList
@@ -30,10 +27,10 @@ namespace CrackingTheCodingInterview
     /// <summary>
     /// Testing implementation of singly linked list
     /// </summary>
-    public class SinglyLinkedListTest
+    internal class DeleteMiddleNodeTest
     {
         /// <summary>
-        /// Singly Linked List Implementation Test
+        /// Testing deletion of middle given only a pointer to it
         /// </summary>
         static void Main()
         {

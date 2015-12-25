@@ -6,9 +6,6 @@
 
 using System;
 
-/// <summary>
-/// Practising problems from Cracking the Coding Interview book
-/// </summary>
 namespace CrackingTheCodingInterview
 {
     /// <summary>
@@ -64,6 +61,7 @@ namespace CrackingTheCodingInterview
         ///	Creates a new node for inserting in singly linked list
         /// <param name="d">Data to be inserted in node</param>
         /// <returns>Returns the created node to be added in singly linked list</returns>
+        /// </summary>
         private Node CreateNewNode(object d)
         {
             Node newNode = new Node();
@@ -117,9 +115,10 @@ namespace CrackingTheCodingInterview
         }
 
         /// <summary>
-        /// <param name="d">Data to be searched in all the nodes of a singly linked list
+        /// <param name="d">Data to be searched in all the nodes of a singly linked list</param>
         /// Traverses through each node of a singly linked list and searches for an element
         /// <returns>Node if the searched element exists else null </returns>
+        /// </summary>
         public Node Search(object d)
         {
             Node temp = head;
