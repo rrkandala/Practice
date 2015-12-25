@@ -12,52 +12,52 @@ using System;
 namespace CrackingTheCodingInterview
 {
     /// <summary>
-    /// Implementation of a singly linked list
+    /// A node of the singly linked list
+    ///	It contains data in generic object type and points to next node in the list
     /// </summary>
-    public class SinglyLinkedList
+    public class Node
     {
+        private object data;
+        private Node next;
+
         /// <summary>
-        /// A node of the singly linked list
-        ///	It contains data in generic object type and points to next node in the list
+        /// Data contained in the node
         /// </summary>
-        public class Node
+        public object Data
         {
-            private object data;
-            private Node next;
-
-            /// <summary>
-            /// Data contained in the node
-            /// </summary>
-            public object Data
+            get
             {
-                get
-                {
-                    return data;
-                }
-
-                set
-                {
-                    data = value;
-                }
+                return data;
             }
 
-            /// <summary>
-            /// Reference to the next node of the singly linked list
-            /// </summary>
-            public Node Next
+            set
             {
-                get
-                {
-                    return next;
-                }
-
-                set
-                {
-                    next = value;
-                }
+                data = value;
             }
         }
 
+        /// <summary>
+        /// Reference to the next node of the singly linked list
+        /// </summary>
+        public Node Next
+        {
+            get
+            {
+                return next;
+            }
+
+            set
+            {
+                next = value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Implementation of a singly linked list
+    /// </summary>
+    public partial class SinglyLinkedList
+    {
         private Node head;
 
         /// <summary>
@@ -117,20 +117,24 @@ namespace CrackingTheCodingInterview
         }
 
         /// <summary>
-        /// Singly Linked List Implementation Test
-        /// </summary>
-        static void Main()
+        /// <param name="d">Data to be searched in all the nodes of a singly linked list
+        /// Traverses through each node of a singly linked list and searches for an element
+        /// <returns>Node if the searched element exists else null </returns>
+        public Node Search(object d)
         {
-            SinglyLinkedList list = new SinglyLinkedList();
-            list.Insert(1);
-            list.Insert(2);
-            list.Insert(3);
-            list.Insert(4);
-            list.Insert(5);
+            Node temp = head;
 
-            list.Print();
+            while (temp != null)
+            {
+                if (temp.Data.Equals(d))
+                {
+                    return temp;
+                }
 
-            Console.ReadLine();
+                temp = temp.Next;
+            }
+
+            return null;
         }
     }
 }
