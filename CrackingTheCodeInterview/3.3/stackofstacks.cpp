@@ -120,6 +120,7 @@ public:
 	void push(T elem);
 	T pop();
 	T peek();
+	T popAt(int i);
 };
 
 // Constructor initializing a set of stacks
@@ -128,7 +129,6 @@ SetOfStacks<T>::SetOfStacks(int maxStackCapacity)
 {
 	currStackIndex = 0;
 	size = maxStackCapacity;
-	//substack<T> *s = new substack<T>(maxStackCapacity);
 	setofstacks.push_back(new substack<T>(maxStackCapacity));
 }
 
@@ -150,7 +150,6 @@ void SetOfStacks<T>::push(T elem)
 	else
 	{
 		currStackIndex++;
-		//substack<T> *s = new substack<T>(size);
 		setofstacks.push_back(new substack<T>(size));
 		setofstacks[currStackIndex]->push(elem);
 	}
@@ -188,6 +187,21 @@ T SetOfStacks<T>::peek()
 	return setofstacks[currStackIndex].peek();
 }
 
+// Popping from substack of specific index
+template <class T>
+T SetOfStacks<T>::popAt(int i)
+{
+	if(i < setofstacks.size() && !setofstacks[i]->isempty())
+	{
+		return setofstacks[i]->pop();
+	}
+	else
+	{
+		cout << "Stack is empty" << endl;
+		return NULL;
+	}
+}
+
 int main()
 {
 	SetOfStacks<int> *s = new SetOfStacks<int>(5);
@@ -204,10 +218,21 @@ int main()
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
+	cout << s->popAt(1) << endl;
+	cout << s->popAt(0) << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
+
+	s->push(1);
+	s->push(2);
+	s->push(3);
+
 	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->peek() << endl;
+	
 	cout << s->pop() << endl;
 
 	s->push(1);
