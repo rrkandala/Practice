@@ -6,22 +6,6 @@
 
 #include "substack.h"
 
-template <class T>
-class substack
-{
-private:
-	T *arr;
-	int nextAvailable;
-	int size;
-public:
-	substack(int capacity);
-	~substack();
-	void push(T elem);
-	T pop();
-	T peek();
-	bool isfull();
-};
-
 // Constructor initializing size of substack
 template <class T>
 substack<T>::substack(int capacity)
@@ -96,6 +80,13 @@ bool substack<T>::isfull()
 	return (nextAvailable == size);
 }
 
+// Checking if a substack is empty or not
+template <class T>
+bool substack<T>::isempty()
+{
+	return (nextAvailable == 0);
+}
+
 // Program execution starts here
 int main()
 {
@@ -117,12 +108,14 @@ int main()
 	obj->push(4);
 	obj->push(5);
 	obj->push(6);
-	
+
 	cout << "Pop: " << obj->pop() << endl;
 
 	cout << "Is Full: " << obj->isfull() << endl;
 
 	delete obj;
+
+	system("pause");
 
 	return 0;
 }
