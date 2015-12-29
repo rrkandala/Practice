@@ -128,8 +128,8 @@ SetOfStacks<T>::SetOfStacks(int maxStackCapacity)
 {
 	currStackIndex = 0;
 	size = maxStackCapacity;
-	substack<T> s(maxStackCapacity);
-	setofstacks.push_back(s);
+	substack<T> *s = new substack<T>(maxStackCapacity);
+	setofstacks.push_back(*s);
 }
 
 // Destructor clearing set of stacks vector
@@ -150,8 +150,8 @@ void SetOfStacks<T>::push(T elem)
 	else
 	{
 		currStackIndex++;
-		substack<T> s(size);
-		setofstacks.push_back(s);
+		substack<T> *s = new substack<T>(size);
+		setofstacks.push_back(*s);
 		setofstacks[currStackIndex].push(elem);
 	}
 }
@@ -192,7 +192,6 @@ int main()
 	s->push(7);
 	s->push(8);
 
-	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
