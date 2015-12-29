@@ -23,7 +23,7 @@ public:
 	T pop();
 	T peek();
 	bool isfull();
-	bool isempty();
+	bool isempty();	
 };
 
 // Constructor initializing size of substack
@@ -111,7 +111,7 @@ template <class T>
 class SetOfStacks
 {
 private:
-	vector<substack<T>> setofstacks;
+	vector<substack<T>*> setofstacks;
 	int currStackIndex;
 	int size;
 public:
@@ -120,6 +120,7 @@ public:
 	void push(T elem);
 	T pop();
 	T peek();
+	T popAt(int i);
 };
 
 // Constructor initializing a set of stacks
@@ -128,8 +129,7 @@ SetOfStacks<T>::SetOfStacks(int maxStackCapacity)
 {
 	currStackIndex = 0;
 	size = maxStackCapacity;
-	substack<T> *s = new substack<T>(maxStackCapacity);
-	setofstacks.push_back(*s);
+	setofstacks.push_back(new substack<T>(maxStackCapacity));
 }
 
 // Destructor clearing set of stacks vector
@@ -143,16 +143,15 @@ SetOfStacks<T>::~SetOfStacks()
 template <class T>
 void SetOfStacks<T>::push(T elem)
 {
-	if (!setofstacks[currStackIndex].isfull())
+	if (!setofstacks[currStackIndex]->isfull())
 	{
-		setofstacks[currStackIndex].push(elem);
+		setofstacks[currStackIndex]->push(elem);
 	}
 	else
 	{
 		currStackIndex++;
-		substack<T> *s = new substack<T>(size);
-		setofstacks.push_back(*s);
-		setofstacks[currStackIndex].push(elem);
+		setofstacks.push_back(new substack<T>(size));
+		setofstacks[currStackIndex]->push(elem);
 	}
 }
 
@@ -160,15 +159,24 @@ void SetOfStacks<T>::push(T elem)
 template <class T>
 T SetOfStacks<T>::pop()
 {
-	if (!setofstacks[currStackIndex].isempty())
+	if (!setofstacks[currStackIndex]->isempty())
 	{
-		return setofstacks[currStackIndex].pop();
+		return setofstacks[currStackIndex]->pop();
 	}
 	else
 	{
 		setofstacks.pop_back();
 		currStackIndex--;
-		return setofstacks[currStackIndex].pop();
+
+		if (currStackIndex >= 0)
+		{
+			return setofstacks[currStackIndex]->pop();
+		}
+		else
+		{
+			cout << "Stack is empty" << endl;
+			return NULL;
+		}
 	}
 }
 
@@ -176,7 +184,22 @@ T SetOfStacks<T>::pop()
 template <class T>
 T SetOfStacks<T>::peek()
 {
-	return setofstacks[currStackIndex].peek();
+	return setofstacks[currStackIndex]->peek();
+}
+
+// Popping from substack of specific index
+template <class T>
+T SetOfStacks<T>::popAt(int i)
+{
+	if(i < setofstacks.size() && !setofstacks[i]->isempty())
+	{
+		return setofstacks[i]->pop();
+	}
+	else
+	{
+		cout << "Stack is empty" << endl;
+		return NULL;
+	}
 }
 
 int main()
@@ -195,10 +218,21 @@ int main()
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
+	cout << s->popAt(1) << endl;
+	cout << s->popAt(0) << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
+
+	s->push(1);
+	s->push(2);
+	s->push(3);
+
 	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->peek() << endl;
+	
 	cout << s->pop() << endl;
 
 	system("pause");
