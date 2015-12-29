@@ -111,7 +111,7 @@ template <class T>
 class SetOfStacks
 {
 private:
-	vector<substack<T>> setofstacks;
+	vector<substack<T>*> setofstacks;
 	int currStackIndex;
 	int size;
 public:
@@ -128,8 +128,8 @@ SetOfStacks<T>::SetOfStacks(int maxStackCapacity)
 {
 	currStackIndex = 0;
 	size = maxStackCapacity;
-	substack<T> *s = new substack<T>(maxStackCapacity);
-	setofstacks.push_back(*s);
+	//substack<T> *s = new substack<T>(maxStackCapacity);
+	setofstacks.push_back(new substack<T>(maxStackCapacity));
 }
 
 // Destructor clearing set of stacks vector
@@ -143,16 +143,16 @@ SetOfStacks<T>::~SetOfStacks()
 template <class T>
 void SetOfStacks<T>::push(T elem)
 {
-	if (!setofstacks[currStackIndex].isfull())
+	if (!setofstacks[currStackIndex]->isfull())
 	{
-		setofstacks[currStackIndex].push(elem);
+		setofstacks[currStackIndex]->push(elem);
 	}
 	else
 	{
 		currStackIndex++;
-		substack<T> *s = new substack<T>(size);
-		setofstacks.push_back(*s);
-		setofstacks[currStackIndex].push(elem);
+		//substack<T> *s = new substack<T>(size);
+		setofstacks.push_back(new substack<T>(size));
+		setofstacks[currStackIndex]->push(elem);
 	}
 }
 
@@ -160,15 +160,24 @@ void SetOfStacks<T>::push(T elem)
 template <class T>
 T SetOfStacks<T>::pop()
 {
-	if (!setofstacks[currStackIndex].isempty())
+	if (!setofstacks[currStackIndex]->isempty())
 	{
-		return setofstacks[currStackIndex].pop();
+		return setofstacks[currStackIndex]->pop();
 	}
 	else
 	{
 		setofstacks.pop_back();
 		currStackIndex--;
-		return setofstacks[currStackIndex].pop();
+
+		if (currStackIndex >= 0)
+		{
+			return setofstacks[currStackIndex]->pop();
+		}
+		else
+		{
+			cout << "Stack is empty" << endl;
+			return NULL;
+		}
 	}
 }
 
@@ -196,6 +205,15 @@ int main()
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+	cout << s->pop() << endl;
+
+	s->push(1);
+	s->push(2);
+	s->push(3);
+
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
 	cout << s->pop() << endl;
