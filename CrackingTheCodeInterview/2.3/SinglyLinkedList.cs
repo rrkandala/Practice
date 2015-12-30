@@ -135,40 +135,49 @@ namespace CrackingTheCodingInterview
 
             return null;
         }
-		
-		/// <summary>
-		/// Returns head of the linked list if it exists else null
-		/// <returns>Data in head of linked list if it exists else null</returns>
-		/// </summary>
-		public object DeleteHead()
-		{
-			if(head != null)
-			{
-				Node temp = head;
-				head = head.Next;
-				
-				return temp.Data;
-			}
-			else
-			{
-				return null;
-			}
-		}
-		
-		/// <summary>
-		/// Peeks head of the linked list if it exists else null
-		/// <returns>Data in head of linked list if it exists else null</returns>
-		/// </summary>
-		public object PeekHead()
-		{
-			if(head != null)
-			{
-				return head.Data;
-			}
-			else
-			{
-				return null;
-			}
-		}
+
+        /// <summary>
+        /// Returns head of the linked list if it exists else null
+        /// <returns>Data in head of linked list if it exists else null</returns>
+        /// </summary>
+        public object DeleteHead()
+        {
+            if (head != null)
+            {
+                Node temp = head;
+                head = head.Next;
+
+                return temp.Data;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Peeks head of the linked list if it exists else null
+        /// <returns>Data in head of linked list if it exists else null</returns>
+        /// </summary>
+        public object PeekHead()
+        {
+            if (head != null)
+            {
+                return head.Data;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the singly linked list is empty
+        /// <returns>true if linked list is empty else false</returns>
+        /// </summary>
+        public bool IsEmpty()
+        {
+            return (head == null);
+        }
     }
 }

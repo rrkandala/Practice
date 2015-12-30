@@ -41,11 +41,21 @@ namespace CrackingTheCodingInterview
         }
 
         /// <summary>
+		/// Gets a peek on top of stack
         /// <returns>Element on top of stack peeked </returns>
         /// </summary>
         public object Peek()
         {
             return top.PeekHead();
+        }
+
+        /// <summary>
+        /// Checks if stack is empty or not
+        /// <returns>true if stack is empty else false</returns>
+        /// </summary>
+        public bool IsEmpty()
+        {
+            return top.IsEmpty();
         }
     }
 
