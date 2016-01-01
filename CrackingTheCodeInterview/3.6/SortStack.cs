@@ -68,6 +68,9 @@ namespace CrackingTheCodingInterview
         }
     }
 
+    /// <summary>
+    /// Testing sort implementation using at most one additional stack
+    /// </summary>
     internal class SortStackTest
     {
         static void Main()
