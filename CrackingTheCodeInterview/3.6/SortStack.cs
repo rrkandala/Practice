@@ -1,7 +1,7 @@
 /*	Program: Sort a stack in ascending order with biggest items on top using another temp stack but no other data structure
  *	Author: Ankit Srivastava
  *
- *	Date: 12/30/2015
+ *	Date: 12/31/2015
  */
 
 using System;
