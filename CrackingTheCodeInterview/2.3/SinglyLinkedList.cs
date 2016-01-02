@@ -179,5 +179,82 @@ namespace CrackingTheCodingInterview
         {
             return (head == null);
         }
+		
+		/// <summary>
+		/// Inserts the element at the end of the linked list
+		/// <param name="d">Element to be inserted at the end</param>
+		/// </summary>
+		public void InsertEnd(object d)
+		{
+			Node newNode = CreateNewNode(d);
+			
+			Node temp = head;
+			
+			if(head == null)
+			{
+				head = newNode;
+			}
+			else
+			{
+				while(temp.Next != null)
+				{
+					temp = temp.Next;
+				}
+				
+				temp.Next = newNode;
+			}
+		}
+		
+		public object DeleteEnd()
+		{
+			if(head == null || head.Next == null)
+			{
+				return DeleteHead();
+			}
+			else
+			{
+				Node temp = head;
+				
+				while(temp.Next != null)
+				{
+					temp = temp.Next;
+				}
+				
+				temp.Next = null;
+			}
+		}
+		
+		/// <summary>
+		/// Deletes second last element of linked list
+		/// <returns>Second last element of linked list</returns>
+		/// </summary>
+		public object DeleteSecondLast()
+		{
+			if(head == null || head.Next == null)
+			{
+				return null;
+			}
+			else
+			{
+				if(head.Next.Next == null)
+				{
+					head = head.Next;
+				}
+				else
+				{
+					Node temp = head;
+					
+					while(temp.Next.Next.Next != null)
+					{
+						temp = temp.Next;
+					}
+					
+					object del = temp.Next;
+					temp = temp.Next.Next;
+					
+					return del;
+				}
+			}
+		}
     }
 }
