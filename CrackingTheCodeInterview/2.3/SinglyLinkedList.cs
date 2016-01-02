@@ -55,7 +55,10 @@ namespace CrackingTheCodingInterview
     /// </summary>
     public partial class SinglyLinkedList
     {
-        private Node head;
+        /// <summary>
+        /// Root of the linked list
+        /// </summary>
+        internal Node head;
 
         /// <summary>
         ///	Creates a new node for inserting in singly linked list
@@ -224,7 +227,7 @@ namespace CrackingTheCodingInterview
                     temp = temp.Next;
                 }
 
-                object del = temp.Next;
+                object del = temp.Next.Data;
                 temp.Next = null;
                 return del;
             }
@@ -244,7 +247,7 @@ namespace CrackingTheCodingInterview
             {
                 if (head.Next.Next == null)
                 {
-                    object del = head;
+                    object del = head.Data;
                     head = head.Next;
 
                     return del;
@@ -258,7 +261,7 @@ namespace CrackingTheCodingInterview
                         temp = temp.Next;
                     }
 
-                    object del = temp.Next;
+                    object del = temp.Next.Data;
                     temp = temp.Next.Next;
 
                     return del;
