@@ -213,11 +213,54 @@ namespace CrackingTheCodingInterview
         /// <summary>
         /// Check if a tree is balanced
         /// </summary>
-        /// <param name="leaf">Current node</param>
         /// <returns>true if tree balanced else false</returns>
-        public bool CheckTreeBalanced(TreeNode leaf)
+        public bool IsTreeBalanced()
         {
-            return false;
+            if(ComputeAndCheckHeight(root) == -1)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Computes height of left and right subtree recursively and checks validity of balanced tree at each step
+        /// </summary>
+        /// <param name="leaf">Starts at root</param>
+        /// <returns>true if tree with current leaf as root is balanced or not</returns>
+        public int ComputeAndCheckHeight(TreeNode leaf)
+        {
+            if(leaf == null)
+            {
+                return 0;
+            }
+            else
+            {
+                int leftHeight = ComputeAndCheckHeight(leaf.Left);
+                if(leftHeight == -1)
+                {
+                    return -1;
+                }
+
+                int rightHeight = ComputeAndCheckHeight(leaf.Right);
+                if(rightHeight == -1)
+                {
+                    return -1;
+                }
+
+                int heightDiff = Math.Abs(leftHeight - rightHeight);
+                if (heightDiff > 1)
+                {
+                    return -1;
+                }
+                else
+                {
+                    return (Math.Max(leftHeight, rightHeight) + 1);
+                }
+            }
         }
     }
 
@@ -227,15 +270,17 @@ namespace CrackingTheCodingInterview
         {
             BTree t = new BTree();
 
-            t.Insert(3);
             t.Insert(1);
-            t.Insert(4);
             t.Insert(2);
+            t.Insert(3);
+            t.Insert(4);
             t.Insert(5);
 
             Console.WriteLine("Value {0} {1}", 3, t.Search(3));
 
             t.Print();
+
+            Console.WriteLine("Is Tree Balanced: {0}", t.IsTreeBalanced());
 
             Console.ReadLine();
         }
