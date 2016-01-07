@@ -182,7 +182,9 @@ namespace CrackingTheCodingInterview
 				return;
 			}
 			
-			int mid = start/2 + end/2;
+			int mid = start + (end - start) / 2;
+			Console.WriteLine("Start: {0}", start);
+			Console.WriteLine("End: {0}", end);
 			Console.WriteLine("Mid: {0}", mid);
 			
 			InsertNode(sortedArray[mid]);
