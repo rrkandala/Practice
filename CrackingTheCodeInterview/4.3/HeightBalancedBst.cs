@@ -59,7 +59,111 @@ namespace CrackingTheCodingInterview
 	/// </summary>
 	public class HeightBalancedBst
 	{	
+		/// <summary>
+		/// Sorted Array of integers
+		/// </summary>
+		private int[] sortedArray		
+
+		/// <summary>
+		/// Size of the BST array
+		/// </summary>
+		private int size;	
+
+		/// <summary>
+		/// Root of the Binary Search Tree
+		/// </summary>
+		private BstNode root;
 		
+		/// <summary>
+		/// Constructor initializing root to null
+		/// </summary>
+		public HeightBalancedBst(int size)
+		{
+			root = null;
+			sortedArray = new int[size];
+		}
+		
+		/// <summary>
+		/// Inserting node to BST
+		/// </summary>
+		public void Insert()
+		{
+			Console.WriteLine("Enter {0} elements: ", size);
+
+			for(int i = 0; i < size; i++)
+			{
+				sortedArray[i] = Convert.ToInt32(Console.ReadLine());
+			}
+		}
+		
+		public void InsertNode(int d)
+		{
+			BstNode newBstNode = new BstNode(d);			
+
+			if(root == null)
+			{
+				root = newBstNode;
+			}
+			else
+			{
+				BstNode temp = root;
+
+				while(temp != null)
+				{
+					if(d < (int)temp.Data)
+					{
+						if(temp.Left == null)
+						{
+							temp.Left = newBstNode;
+							break;
+						}
+						else
+						{
+							temp = temp.Left;
+						}
+					}
+					else
+					{
+						if(temp.Right == null)
+						{
+							temp.Right = newBstNode;
+							break;
+						}
+						else
+						{
+							temp = temp.Right;
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Move all sorted elements of array to BST of minimal height
+		/// </summary>
+		public void CopySortedArrayToHBst(int start, int end)
+		{
+			if(start > end)
+			{
+				return;
+			}
+			
+			int mid = start/2 + end/2;
+			InsertNode(sortedArray(mid));
+			
+			CopySortedArrayToHBst(start, mid-1);
+			CopySortedArrayToHBst(mid+1, end);
+		}
+
+		print void InorderPrint(BstNode n)
+		{
+			if(n != null)
+			{
+				Inorder(n.Left);	
+				Console.WriteLine("{0}->", n->Data);			
+				Inorder(n.Right);				
+			}
+		}
 	}
 
 	/// <summary>
@@ -69,7 +173,12 @@ namespace CrackingTheCodingInterview
 	{
 		static void Main()
 		{
+			HeightBalancedBst h = new HeightBalancedBst(5);
+			h.Insert();
+			h.CopySortedArrayToHBst(0, 4);
+			h.Print();
 			
+			Console.ReadLine();
 		}
 	}
 }
