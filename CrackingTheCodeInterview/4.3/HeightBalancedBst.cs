@@ -31,17 +31,50 @@ namespace CrackingTheCodingInterview
 		/// <summary>
 		/// Data stored in the node
 		/// </summary>
-		public object Data { get; set; }
+		public object Data 
+		{ 
+		    get 
+		    { 
+		        return data; 
+		        
+		    } 
+		    set
+		    { 
+		        data = value;
+		    }
+		}
 		
 		/// <summary>
 		/// Left node of the BST tree
 		/// </summary>
-		public BstNode Left { get; set; }
+		public BstNode Left
+		{ 
+		    get 
+		    { 
+		        return left; 
+		        
+		    } 
+		    set
+		    { 
+		        left = value;
+		    }
+		}
 
 		/// <summary>
 		/// Right node of the BST tree
 		/// </summary>
-		public BstNode Right { get; set; }
+		public BstNode Right
+		{ 
+		    get 
+		    { 
+		        return right; 
+		        
+		    } 
+		    set
+		    { 
+		        right = value;
+		    }
+		}
 
 		/// <summary>
 		/// Constructor of BST Node
@@ -62,7 +95,7 @@ namespace CrackingTheCodingInterview
 		/// <summary>
 		/// Sorted Array of integers
 		/// </summary>
-		private int[] sortedArray		
+		private int[] sortedArray;		
 
 		/// <summary>
 		/// Size of the BST array
@@ -77,25 +110,26 @@ namespace CrackingTheCodingInterview
 		/// <summary>
 		/// Constructor initializing root to null
 		/// </summary>
-		public HeightBalancedBst(int size)
+		public HeightBalancedBst(int s)
 		{
 			root = null;
+			size = s;
 			sortedArray = new int[size];
 		}
 		
 		/// <summary>
 		/// Inserting node to BST
+		/// <param name="s"> Array to be inserted </param>
 		/// </summary>
-		public void Insert()
+		public void Insert(int[] s)
 		{
-			Console.WriteLine("Enter {0} elements: ", size);
-
-			for(int i = 0; i < size; i++)
-			{
-				sortedArray[i] = Convert.ToInt32(Console.ReadLine());
-			}
+			sortedArray = s;
 		}
 		
+		/// <summary>
+		/// Inserting node in BST
+		/// <param name="d"> Data element in node </param>
+		/// </summary>
 		public void InsertNode(int d)
 		{
 			BstNode newBstNode = new BstNode(d);			
@@ -149,20 +183,34 @@ namespace CrackingTheCodingInterview
 			}
 			
 			int mid = start/2 + end/2;
-			InsertNode(sortedArray(mid));
+			Console.WriteLine("Mid: {0}", mid);
+			
+			InsertNode(sortedArray[mid]);
 			
 			CopySortedArrayToHBst(start, mid-1);
 			CopySortedArrayToHBst(mid+1, end);
 		}
 
-		print void InorderPrint(BstNode n)
+        /// <summary>
+        /// Printing inorder traversal
+        /// <param name="n">Node to be the root
+        /// </summary>
+		internal void InorderPrint(BstNode n)
 		{
 			if(n != null)
 			{
-				Inorder(n.Left);	
-				Console.WriteLine("{0}->", n->Data);			
-				Inorder(n.Right);				
+				InorderPrint(n.Left);	
+				Console.WriteLine("{0}->", n.Data);			
+				InorderPrint(n.Right);				
 			}
+		}
+		
+		/// <summary>
+		/// Printing inorder traversal
+		/// </summary>
+		public void Print()
+		{
+		    InorderPrint(root);
 		}
 	}
 
@@ -173,8 +221,15 @@ namespace CrackingTheCodingInterview
 	{
 		static void Main()
 		{
-			HeightBalancedBst h = new HeightBalancedBst(5);
-			h.Insert();
+			int size = 5;
+			HeightBalancedBst h = new HeightBalancedBst(size);
+			int [] arr = new int[size];
+			for(int i = 0; i < size; i++)
+			{
+				arr[i] = i;
+			}	
+
+			h.Insert(arr);
 			h.CopySortedArrayToHBst(0, 4);
 			h.Print();
 			
