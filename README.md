@@ -1,2 +1,2 @@
 # Practice
-This is a repository of practice algorithms and data structures in various languages
+This is a repository of Cracking the Coding Interview practice problems
