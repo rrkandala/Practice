@@ -39,6 +39,10 @@ Node<T>::Node(T d)
 template <class T>
 class BinaryTree
 {
+	private:
+		T min;
+		bool isBst = true;
+	
 	public:
 		Node<T> *root;
 		BinaryTree();
@@ -47,6 +51,7 @@ class BinaryTree
 		void InOrder(Node<T> *temp);
 		void PostOrder(Node<T> *temp);
 		bool IsBinarySearchTree();
+		void CheckBst(Node<T> *temp);
 };
 
 template <class T>
@@ -147,22 +152,62 @@ bool BinaryTree<T>::IsBinarySearchTree()
 {
 	Node<T> *temp = root;
 	
-	InOrder(temp);
+	while(temp->left != NULL)
+	{
+		temp = temp->left;
+	}
 	
-	return true;
+	min = temp->data;
+	
+	InOrder(root);
+	
+	CheckBst(root);
+	
+	if(isBst)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+template <class T>
+void BinaryTree<T>::CheckBst(Node<T> *temp)
+{
+	if(temp == NULL || isBst == false)
+	{
+		return;
+	}
+	else
+	{
+		CheckBst(temp->left);
+	
+		if(temp->data < min && isBst == true)
+		{
+			isBst = false;
+		}
+		else
+		{
+			min = temp->data;
+		}
+	
+		CheckBst(temp->right);
+	}
 }
 
 int main()
 {
-	BinaryTree<int> bt;
+	BinaryTree<double> bt;
 	
-	bt.Insert(5);
-	bt.Insert(1);
-	bt.Insert(2);
-	bt.Insert(3);
-	bt.Insert(4);
+	bt.Insert(5.1);
+	bt.Insert(1.1);
+	bt.Insert(2.1);
+	bt.Insert(3.1);
+	bt.Insert(4.1);
 	
-	cout << "Is Binary Search Tree " << bt.IsBinarySearchTree();
+	cout << "Is Binary Search Tree " << (bt.IsBinarySearchTree() == false ? ": False" : ": True") << endl;
 	
 	return 0;
 }
