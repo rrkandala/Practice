@@ -56,6 +56,9 @@ public:
 	bool IsBinarySearchTree();
 	void CheckBst(Node<T> *temp);
 	Node<T>* LowestCommonAncestor(Node<T> *temp1, Node<T> *temp2);
+	Node<T>* LCA(T n1, T n2);
+	Node<T>* FindLCA(Node<T>* temp1, T n1, T n2);
+	bool BinaryTree<T>::Covers(Node<T> temp, T n);
 	void TestLCA();
 };
 
@@ -207,9 +210,9 @@ void BinaryTree<T>::CheckBst(Node<T> *temp)
 template <class T>
 void BinaryTree<T>::TestLCA()
 {
-	Node<T> *res = LowestCommonAncestor(root->left->left, root->left->right);
+	Node<T> *res = LCA(5.1, 3.1);
 
-	cout << "The root of " << root->left->left->left->data << " and " << root->left->right->data << " is: " << res->data << endl;
+	cout << "The root of 3.1 and 5.1 is << " << res->data << endl;
 }
 
 template <class T>
@@ -266,6 +269,54 @@ Node<T>* BinaryTree<T>::LowestCommonAncestor(Node<T> *temp1, Node<T> *temp2)
 	return temp1->parent;
 }
 
+template <class T>
+Node<T>* BinaryTree<T>::LCA(T n1, T n2)
+{
+	return FindLCA(root, n1, n2);
+}
+
+template <class T>
+bool BinaryTree<T>::Covers(Node<T> temp, T n)
+{
+	if (temp == null)
+	{
+		return false;
+	}
+	
+	if (temp->data == n)
+	{
+		return true;
+	}
+
+	return Covers(temp->left, n) || Covers(temp->right, n);
+}
+
+template <class T>
+Node<T>* BinaryTree<T>::FindLCA(Node<T>* temp, T n1, T n2)
+{
+	if (temp == NULL)
+	{
+		return NULL;
+	}
+	else
+	{
+		if (temp->data == n1 || temp->data == n2)
+		{
+			return temp;
+		}
+
+		Node<T> *left_lca = FindLCA(temp->left, n1, n2);
+		Node<T> *right_lca = FindLCA(temp->right, n1, n2);
+
+		if (left_lca != NULL && right_lca != NULL)
+		{
+			return temp;
+		}
+
+		return (left_lca != NULL) ? left_lca : right_lca;
+	}
+}
+
 int main()
 {
 	BinaryTree<double> bt;
@@ -276,6 +327,7 @@ int main()
 	bt.Insert(5.1);
 	bt.Insert(1.1);
 	bt.Insert(3.1);
+	bt.Insert(7.1);
 
 	cout << "Is Binary Search Tree " << (bt.IsBinarySearchTree() == false ? ": False" : ": True") << endl;
 
