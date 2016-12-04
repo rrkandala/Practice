@@ -18,7 +18,9 @@ public:
 	LinkedList();
 	void Insert(int d);
 	void Print();
+	void Reverse();
 	vector<int> SumNumbers(LinkedList h1, LinkedList h2);
+	vector<int> SumNumbersForward(LinkedList h1, LinkedList h2);
 };
 
 LinkedList::LinkedList()
@@ -98,22 +100,49 @@ vector<int> LinkedList::SumNumbers(LinkedList h1, LinkedList h2)
 	return v;
 }
 
+vector<int> LinkedList::SumNumbersForward(LinkedList l1, LinkedList l2)
+{
+	Node *t1 = l1.head;
+	Node *t2 = l2.head;
+
+	l1.Reverse();
+	l2.Reverse();
+
+	return SumNumbers(l1, l2);
+}
+
+void LinkedList::Reverse()
+{
+	Node *prev = NULL;
+	Node *curr = head;
+	
+	while (curr != NULL)
+	{
+		Node *temp = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = temp;
+	}
+
+	head = prev;
+}
+
 int main()
 {
 	LinkedList l1, l2;
 
-	l1.Insert(6);
-	l1.Insert(1);
 	l1.Insert(7);
+	l1.Insert(1);
+	l1.Insert(6);
 
-	l2.Insert(2);
+	l2.Insert(5);
+	l2.Insert(5);
 	l2.Insert(9);
-	l2.Insert(5);
-	l2.Insert(5);
+	l2.Insert(2);
 
 	LinkedList l;
 
-	vector<int> v= l.SumNumbers(l1, l2);
+	vector<int> v= l.SumNumbersForward(l1, l2);
 
 	cout << "Sum of numbers: ";
 	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
