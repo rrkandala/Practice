@@ -12,21 +12,17 @@ class Stack
 {
 private:
 	Node *head;
-	Stack *min;
 public:
 	Stack();
 	void Push(int d);
 	int Pop();
 	int Peek();
 	bool IsEmpty();
-	int GetMin();
 };
 
 Stack::Stack()
 {
 	head = NULL;
-	min = new Stack();
-	min->head = NULL;
 }
 
 void Stack::Push(int d)
@@ -34,11 +30,6 @@ void Stack::Push(int d)
 	Node *newNode = new Node();
 	newNode->data = d;
 	newNode->next = NULL;
-
-	if (newNode->data < head->data)
-	{
-		min->Push(d);
-	}
 
 	if (head != NULL)
 	{
@@ -58,37 +49,89 @@ int Stack::Pop()
 	else
 	{
 		int d = head->data;
-
-		if (d == min->head->data)
-		{
-			min->Pop();
-		}
-
 		head = head->next;
 		return d;
 	}
 }
 
-int Stack::GetMin()
+int Stack::Peek()
 {
-	return min->head->data;
+	if (head == NULL)
+	{
+		cout << "Stack is empty";
+		return -1;
+	}
+	else
+	{
+		return head->data;
+	}
+}
+
+bool Stack::IsEmpty()
+{
+	return head == NULL;
+}
+
+class MinStack : public Stack
+{
+private:
+	Stack min;
+public:
+	void Push(int d);
+	int Pop();
+	int GetMin();
+};
+
+void MinStack::Push(int d)
+{
+	if (min.IsEmpty() || (!min.IsEmpty() && min.Peek() > d))
+	{
+		min.Push(d);
+	}
+
+	Stack::Push(d);
+}
+
+int MinStack::Pop()
+{
+	if (Stack::IsEmpty())
+	{
+		cout << "Stack is empty";
+		return -1;
+	}
+	else
+	{
+		int d = Stack::Pop();
+		if (!min.IsEmpty() && d == min.Peek())
+		{
+			min.Pop();
+		}
+
+		return d;
+	}
+}
+
+int MinStack::GetMin()
+{
+	return min.Peek();
 }
 
 int main()
 {
-	Stack s;
+	MinStack s;
 
 	s.Push(1);
 	s.Push(2);
-	s.Push(3);
+	s.Push(0);
 	s.Push(4);
 	s.Push(5);
 
-	cout << s.Pop() << endl;
-	cout << s.Pop() << endl;
-	cout << s.Pop() << endl;
-	cout << s.Pop() << endl;
-	cout << s.GetMin() << endl;
+	cout << "Pop: " << s.Pop() << endl;
+	cout << "Min: " << s.GetMin() << endl;
+	cout << "Pop: " << s.Pop() << endl;
+	cout << "Pop: " << s.Pop() << endl;
+	
+	cout << "Min: " << s.GetMin() << endl;
 
 	return 0;
 }
