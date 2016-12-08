@@ -98,6 +98,7 @@ public:
 	int Peek();
 	bool IsEmpty();
 	bool IsFull();
+	int PopAt(int sn);
 };
 
 SetOfStacks::SetOfStacks()
@@ -141,7 +142,7 @@ void SetOfStacks::Push(int d)
 
 int SetOfStacks::Pop()
 {
-	if (s[currStack]->IsEmpty())
+	if (currStack >= 0 && s[currStack]->IsEmpty())
 	{
 		currStack--;
 	}
@@ -180,6 +181,11 @@ bool SetOfStacks::IsEmpty()
 	return currStack < 0;
 }
 
+int SetOfStacks::PopAt(int sn)
+{
+	return s[sn]->Pop();
+}
+
 int main()
 {
 	SetOfStacks s(2, 3);
@@ -192,6 +198,7 @@ int main()
 	s.Push(6);
 	s.Push(7);
 
+	cout << s.PopAt(0) << endl;
 	cout << s.Pop() << endl;
 	cout << s.Pop() << endl;
 	cout << s.Pop() << endl;
