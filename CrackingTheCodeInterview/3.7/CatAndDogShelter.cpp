@@ -1,10 +1,18 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
+
+enum CatDog
+{
+	Cat = 1,
+	Dog = 2
+};
 
 struct Node
 {
 	int data;
+	CatDog cd;
 	Node *next;
 };
 
@@ -14,10 +22,11 @@ private:
 	Node *head;
 public:
 	LinkedList();
-	void InsertHead(int d);
-	void InsertRear(int d);
+	void InsertHead(int d, CatDog obj);
+	void InsertRear(int d, CatDog obj);
 	int DeleteHead();
 	int DeleteRear();
+	int DeleteRear(CatDog obj);
 	bool IsEmpty();
 };
 
@@ -26,10 +35,11 @@ LinkedList::LinkedList()
 	head = NULL;
 }
 
-void LinkedList::InsertHead(int d)
+void LinkedList::InsertHead(int d, CatDog obj)
 {
 	Node *newNode = new Node();
 	newNode->data = d;
+	newNode->cd = obj;
 	newNode->next = NULL;
 
 	if (head != NULL)
@@ -40,10 +50,11 @@ void LinkedList::InsertHead(int d)
 	head = newNode;
 }
 
-void LinkedList::InsertRear(int d)
+void LinkedList::InsertRear(int d, CatDog obj)
 {
 	Node *newNode = new Node();
 	newNode->data = d;
+	newNode->cd = obj;
 	newNode->next = NULL;
 
 	Node *temp = head;
@@ -73,7 +84,9 @@ int LinkedList::DeleteHead()
 	if (!IsEmpty())
 	{
 		int d = head->data;
+		string cdtemp = head->cd == Cat ? "Cat: " : "Dog: ";
 		head = head->next;
+		cout << cdtemp;
 		return d;
 	}
 	else
@@ -91,7 +104,9 @@ int LinkedList::DeleteRear()
 		if (temp->next == NULL)
 		{
 			int d = temp->data;
+			string cdtemp = temp->cd == Cat ? "Cat: " : "Dog: ";
 			head = NULL;
+			cout << cdtemp;
 			return d;
 		}
 
@@ -101,7 +116,9 @@ int LinkedList::DeleteRear()
 		}
 
 		int d = temp->next->data;
+		string cdtemp = temp->cd == Cat ? "Cat: " : "Dog: ";
 		temp->next = NULL;
+		cout << cdtemp;
 		return d;
 	}
 	else
@@ -111,18 +128,68 @@ int LinkedList::DeleteRear()
 	}
 }
 
-enum CatDog
+int LinkedList::DeleteRear(CatDog obj)
 {
-	Cat = 1,
-	Dog = 2
-};
+	Node* last = NULL;
+	Node* temp = head;
+	string res;
+
+
+	if (head == NULL)
+	{
+		cout << "Queue is empty: ";
+		return INT_MAX;
+	}
+	else
+	{
+		while (temp != NULL)
+		{
+			if (temp->cd == obj)
+			{
+				last = temp;
+			}
+
+			temp = temp->next;
+		}
+
+		if (last == NULL)
+		{
+			if (obj == Cat)
+			{
+				res = "Cat: ";
+			}
+			else
+			{
+				res = "Dog: ";
+			}
+
+			cout << res << "not available";
+			return INT_MAX;
+		}
+		else
+		{
+			int d = last->data;
+
+			if (last->next != NULL)
+			{
+				last->data = last->next->data;
+				last->next = last->next->next;
+			}
+			else
+			{
+				last = NULL;
+			}
+
+			cout << res;
+			return d;
+		}
+	}
+}
 
 class CatAndDogShelter
 {
 private:
-	LinkedList *cats;
-	LinkedList *dogs;
-	int last;
+	LinkedList *catsdogs;
 public:
 	CatAndDogShelter();
 	void Enqueue(CatDog obj, int d);
@@ -133,49 +200,27 @@ public:
 
 CatAndDogShelter::CatAndDogShelter()
 {
-	cats = new LinkedList();
-	dogs = new LinkedList();
-	last = -1;
+	catsdogs = new LinkedList();	
 }
 
 void CatAndDogShelter::Enqueue(CatDog obj, int d)
 {
-	if (obj == Cat)
-	{
-		last = Cat;
-		cats->InsertRear(d);
-	}
-	else
-	{
-		last = Dog;
-		dogs->InsertRear(d);
-	}
+	catsdogs->InsertHead(d, obj);
 }
 
 int CatAndDogShelter::Dequeue()
 {
-	if (last == Cat)
-	{
-		return cats->DeleteHead();
-	}
-	else if(last == Dog)
-	{
-		return dogs->DeleteHead();
-	}
-	else
-	{
-		return INT_MAX;
-	}
+	return catsdogs->DeleteRear();
 }
 
 int CatAndDogShelter::DequeueCat()
 {
-	return cats->DeleteHead();
+	return catsdogs->DeleteRear(Cat);
 }
 
 int CatAndDogShelter::DequeueDog()
 {
-	return dogs->DeleteHead();
+	return catsdogs->DeleteRear(Dog);
 }
 
 int main()
@@ -188,6 +233,7 @@ int main()
 	cds.Enqueue(Dog, 40);
 	cds.Enqueue(Dog, 50);
 
+	cout << cds.Dequeue() << endl;
 	cout << cds.DequeueCat() << endl;
 	cout << cds.DequeueDog() << endl;
 
