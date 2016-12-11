@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cmath>
+#include <algorithm>
+#include <string>
 
 using namespace std;
 
@@ -20,6 +23,7 @@ public:
 	void Print();
 	void Print(Node *n);
 	bool IsTreeBalanced();
+	int IsTreeBalanced(Node *n);
 };
 
 BinaryTree::BinaryTree()
@@ -80,6 +84,39 @@ void BinaryTree::Insert(int d)
 	}
 }
 
+bool BinaryTree::IsTreeBalanced()
+{
+	int hLeft = 0, hRight = 0;
+
+	if (root == NULL)
+	{
+		return true;
+	}
+	else
+	{
+		hLeft = 1 + IsTreeBalanced(root->left);
+		hRight = 1 + IsTreeBalanced(root->right);
+		return (abs(hRight - hLeft) <= 1);
+	}
+}
+
+int BinaryTree::IsTreeBalanced(Node *n)
+{
+	if (n == NULL)
+	{
+		return 0;
+	}
+	else
+	{
+		return max(1 + IsTreeBalanced(n->left), 1 + IsTreeBalanced(n->right));
+	}
+}
+
+void BinaryTree::Print()
+{
+	Print(root);
+}
+
 void BinaryTree::Print(Node *n)
 {
 	if (n == NULL)
@@ -94,12 +131,19 @@ void BinaryTree::Print(Node *n)
 	}
 }
 
-void BinaryTree::Print()
-{
-	Print(root);
-}
-
 int main()
 {
+	BinaryTree bt;
+
+	bt.Insert(1);
+	bt.Insert(2);
+	bt.Insert(3);
+	bt.Insert(4);
+	bt.Insert(5);
+
+	string res = bt.IsTreeBalanced() ? " is " : " is not ";
+
+	cout << "Binary Tree" << res << "balanced" << endl;
+
 	return 0;
 }
