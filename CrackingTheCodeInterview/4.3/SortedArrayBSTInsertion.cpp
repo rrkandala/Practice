@@ -18,7 +18,8 @@ public:
 	BinarySearchTree();
 	~BinarySearchTree();
 	void Insert(int d);
-	void Insert(int *arr, int len);
+	void Insert(int *arr, int start, int end, int len);
+	void Print(Node *n);
 	void Print();
 };
 
@@ -72,12 +73,55 @@ void BinarySearchTree::Insert(int d)
 	}
 }
 
-void BinarySearchTree::Insert(int *arr, int len)
+void BinarySearchTree::Insert(int *arr, int start, int end, int len)
 {
-	
+	if (end < start)
+	{
+		return;
+	}
+	else
+	{
+		int mid = (start + end) / 2;
+		Insert(arr[mid]);
+		Insert(arr, start, mid - 1, len);
+		Insert(arr, mid + 1, end, len);
+	}
+}
+
+void BinarySearchTree::Print(Node *n)
+{
+	if (n == NULL)
+	{
+		return;
+	}
+	else
+	{
+		Print(n->left);
+		cout << n->data;
+		Print(n->right);
+	}
+}
+
+void BinarySearchTree::Print()
+{
+	Print(root);
 }
 
 int main()
 {
+	BinarySearchTree b;
+
+	int *a = new int[5];
+
+	a[0] = 1;
+	a[1] = 2;
+	a[2] = 3;
+	a[3] = 4;
+	a[4] = 5;
+
+	b.Insert(a, 0, 4, 5);
+
+	b.Print();
+
 	return 0;
 }
