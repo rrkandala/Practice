@@ -1,3 +1,5 @@
+import sys
+
 class Node:
     def __init__(self):
         self.data = 0
@@ -18,6 +20,9 @@ class BinaryTree:
             self.root = Node(d)
         else:
             self._insert(d, self.root)
+
+    def getRoot(self):
+        return self.root
 
     def _insert(self, d, node):
         if(d < node.data):
@@ -40,15 +45,45 @@ class BinaryTree:
             return;
         else:
             self._printTree(node.left)
-            print("%d->" % node.data)
+            sys.stdout.write("%d->" % node.data)
             self._printTree(node.right)
 
-tree = BinaryTree()
-tree.insert(5)
-tree.insert(2)
-tree.insert(1)
-tree.insert(3)
-tree.insert(7)
-tree.insert(6)
+    def IsSubTree(self, T, S):
+        if(S == None):
+            return True
 
-tree.printTree()
+        if(T == None):
+            return False
+        
+        if(self.AreIdentical(T, S) == True):
+            return True
+        
+        return self.AreIdentical(T.left, S) or self.AreIdentical(T.right, S)
+
+    def AreIdentical(self, s1, s2):
+        if(s1 == None and s2 == None):
+            return True
+        elif(s1 == None or s2 == None):
+            return False
+
+        return (s1.data == s2.data and self.AreIdentical(s1.left, s2.left) and self.AreIdentical(s1.right, s2.right))
+
+tree1 = BinaryTree()
+tree1.insert(5)
+tree1.insert(2)
+tree1.insert(1)
+tree1.insert(3)
+tree1.insert(7)
+tree1.insert(6)
+print("Tree 1: ")
+tree1.printTree()
+
+tree2 = BinaryTree();
+tree2.insert(2)
+tree2.insert(1)
+tree2.insert(3)
+print("Tree 1: ")
+tree2.printTree()
+
+tree = BinaryTree();
+print("Tree2 is subtree of Tree1: %s" % str(tree.IsSubTree(tree1.getRoot(), tree2.getRoot())))
