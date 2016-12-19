@@ -123,8 +123,8 @@ namespace LowestCommonAncestor
                     found = n;
                 }
 
-                Dfs(n, s, ref found);
-                Dfs(n, s, ref found);
+                Dfs(n.left, s, ref found);
+                Dfs(n.right, s, ref found);
             }
         }
 
@@ -143,47 +143,51 @@ namespace LowestCommonAncestor
             }
         }
 
-        private void GetLowestCommonAncestor(Node n, Node n1, Node n2, ref Node found)
+        private void GetLowestCommonAncestor(Node n, Node n1, Node n2, ref Node f)
         {
-            if(n1 == null || n2 == null || root == null || n == null || found != null)
+            if(n1 == null || n2 == null || root == null || n == null || f != null)
             {
                 return;
             }
             else
             {
-                Node f = null;
-                Node n1leftfound = null;
-                Dfs(n.left, n1.data, ref n1leftfound);
-                Node n2leftfound = null;
-                Dfs(n.left, n2.data, ref n2leftfound);
+                Node n1found = null;
+                Dfs(n, n1.data, ref n1found);
+                Node n2found = null;
+                Dfs(n, n2.data, ref n2found);
                 
-                if (n1leftfound != null && n2leftfound != null)
+                if(n1found == n || n2found == n)
                 {
-                    GetLowestCommonAncestor(n.left, n1, n2, ref f);
+                    f = n;
                 }
-                else if (n1leftfound != null)
+                else if (n1found != null && n2found != null)
                 {
-                    Node n2rightfound = null;
-                    Dfs(n.right, n2.data, ref n2rightfound);
-
-                    if (n2rightfound != null)
-                    {
-                        f = n;
-                    }
-                }
-                else if(n2leftfound != null)
-                {
+                    Node n1leftfound = null;
+                    Dfs(n.left, n1.data, ref n1leftfound);
+                    Node n2leftfound = null;
+                    Dfs(n.left, n2.data, ref n2leftfound);
                     Node n1rightfound = null;
                     Dfs(n.right, n1.data, ref n1rightfound);
+                    Node n2rightfound = null;
+                    Dfs(n.right, n2.data, ref n1rightfound);
 
-                    if (n1rightfound != null)
+
+                    if (n1leftfound != null && n2leftfound != null)
+                    {
+                        GetLowestCommonAncestor(n.left, n1, n2, ref f);
+                    }
+                    else if(n1rightfound != null && n2rightfound != null)
+                    {
+                        GetLowestCommonAncestor(n.right, n1, n2, ref f);
+                    }
+                    else
                     {
                         f = n;
-                    }
+                    }   
                 }
                 else
                 {
-                    GetLowestCommonAncestor(n.right, n1, n2, ref f);
+                    f = null;
                 }
             }
         }
@@ -219,7 +223,7 @@ namespace LowestCommonAncestor
             bt.Insert(6);
             bt.Insert(7);
 
-            Console.WriteLine("The lowest common ancestor of {0} and {1} is: {2}", 3, 7, bt.GetLowestCommonAncestor(3, 7));
+            Console.WriteLine("The lowest common ancestor of {0} and {1} is: {2}", 1, 7, bt.GetLowestCommonAncestor(1, 7));
 
             Console.ReadLine();
         }
