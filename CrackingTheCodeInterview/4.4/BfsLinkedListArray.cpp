@@ -3,6 +3,62 @@
 
 using namespace std;
 
+
+
+struct Node
+{
+	int data;
+	Node *next;
+};
+
+class LinkedList
+{
+private:
+	Node *head;
+public:
+	LinkedList();
+	~LinkedList();
+	void Insert(int d);
+	void Print();
+};
+
+LinkedList::LinkedList()
+{
+	head = NULL;
+}
+
+LinkedList::~LinkedList()
+{
+	delete head;
+}
+
+void LinkedList::Insert(int d)
+{
+	Node *newNode = new Node();
+	newNode->data = d;
+	newNode->next = NULL;
+
+	if (head != NULL)
+	{
+		newNode->next = head;
+	}
+
+	head = newNode;
+}
+
+void LinkedList::Print()
+{
+	Node *temp = head;
+
+	while (temp != NULL)
+	{
+		cout << temp->data << "->";
+		temp = temp->next;
+	}
+
+	cout << endl;
+}
+
 struct TNode
 {
 	int data;
@@ -15,22 +71,21 @@ class BinaryTree
 private:
 	TNode *root;
 	LinkedList **lArray;
-	int currDepth;
 public:
 	BinaryTree();
 	~BinaryTree();
-	void Insert(TNode *r, int d);
+	void Insert(int d);
 	void Print();
 	void Print(TNode *n);
 	bool Bfs(TNode *n, int s, bool found);
 	bool Dfs(TNode *n, int s, bool found);
-	void TreeToLinkedListArray(TNode *n);
+	void TreeToLinkedListArray();
 };
 
 BinaryTree::BinaryTree()
 {
 	root = NULL;
-	currDepth = 0;
+	lArray = new LinkedList*();
 }
 
 BinaryTree::~BinaryTree()
@@ -38,18 +93,51 @@ BinaryTree::~BinaryTree()
 	delete root;
 }
 
-void BinaryTree::Insert(Node *r, int d)
+void BinaryTree::Insert(int d)
 {
-	if (r == NULL)
+	if (root == NULL)
 	{
 		TNode *tn = new TNode();
 		tn->data = d;
 		tn->left = NULL;
 		tn->right = NULL;
+		root = tn;
 	}
 	else
 	{
-		if()
+		TNode *r = root;
+
+		while (true)
+		{
+			if (r->data < d && r->right == NULL)
+			{
+				TNode *tn = new TNode();
+				tn->data = d;
+				tn->left = NULL;
+				tn->right = NULL;
+
+				r->right = tn;
+				break;
+			}
+			else if (r->data < d && r->right != NULL)
+			{
+				r = r->right;
+			}
+			else if (r->data >= d && r->left == NULL)
+			{
+				TNode *tn = new TNode();
+				tn->data = d;
+				tn->left = NULL;
+				tn->right = NULL;
+
+				r->left = tn;
+				break;
+			}
+			else
+			{
+				r = r->left;
+			}
+		}
 	}
 }
 
@@ -113,68 +201,69 @@ bool BinaryTree::Bfs(TNode *n, int s, bool found)
 				q.push(tn->left);
 				q.push(tn->right);
 			}
-			
-			return found;
+		}
+
+		return found;
+	}
+}
+
+void BinaryTree::TreeToLinkedListArray()
+{
+	TNode *n = root;
+
+	if (n == NULL)
+	{
+		return;
+	}
+	else
+	{
+		queue<TNode *> q;
+		q.push(n);
+		int depth = 0;
+
+		while (!q.empty())
+		{
+			int levelNodes = q.size();
+			lArray[depth] = new LinkedList();
+
+			while (levelNodes > 0)
+			{
+				TNode *temp = q.front();
+				q.pop();
+
+				lArray[depth]->Insert(temp->data);
+				if (temp->left != NULL)
+				{
+					q.push(temp->left);
+				}
+				
+				if (temp->right != NULL)
+				{
+					q.push(temp->right);
+				}
+				
+				levelNodes--;
+			}
+
+			lArray[depth]->Print();
+			depth++;
 		}
 	}
 }
 
-
-
-struct Node
-{
-	int data;
-	Node *next;
-};
-
-class LinkedList
-{
-private:
-	Node *head;
-public:
-	LinkedList();
-	~LinkedList();
-	void Insert(int d);
-	void Print();
-};
-
-LinkedList::LinkedList()
-{
-	head = NULL;
-}
-
-LinkedList::~LinkedList()
-{
-	delete head;
-}
-
-void LinkedList::Insert(int d)
-{
-	Node *newNode = new Node();
-	newNode->data = d;
-	newNode->next = NULL;
-
-	if (head != NULL)
-	{
-		newNode->next = head;
-	}
-
-	head = newNode;
-}
-
-void LinkedList::Print()
-{
-	Node *temp = head;
-
-	while (temp != NULL)
-	{
-		cout << temp->data << "->";
-	}
-
-	cout << endl;
-}
-
 int main()
 {
+	BinaryTree bt;
+
+	bt.Insert(3);
+	bt.Insert(4);
+	bt.Insert(1);
+	bt.Insert(5);
+	bt.Insert(2);
+	bt.Insert(0);
+	bt.Insert(6);
+
+	bt.TreeToLinkedListArray();
+
 	return 0;
 }
