@@ -2,18 +2,16 @@
  * Date: 7/6/2017
  */
  
-#include <iostream>
-#include <string>
+// #include <iostream>
+// #include <string>
 
-using namespace std;
+// using namespace std;
 
-int myAtoi(string str);
+// int myAtoi(string str);
 
-
-
-// class Solution
-// {
-	// public:
+class Solution
+{
+	public:
 		int myAtoi(string str)
 		{
 			int len = str.length();
@@ -26,8 +24,7 @@ int myAtoi(string str);
 			// Special case of string being empty
 			if(len == 0)
 			{
-				cout << "String is empty" << endl;
-				return result;
+				return (int)result;
 			}
 			else
 			{	
@@ -35,8 +32,6 @@ int myAtoi(string str);
 				{
 					if(!isspace(str[firstNonWhiteSpaceChar]))
 					{
-						cout << str[firstNonWhiteSpaceChar] << endl;
-						cout << len << endl;
 						break;
 					}
 					
@@ -46,56 +41,49 @@ int myAtoi(string str);
 				// Special case of all whitespaces
 				if(firstNonWhiteSpaceChar == len)
 				{
-					cout << "All whitespaces" << endl;
-					return result;
+					return (int)result;
 				}
 				else
 				{
 					// Checking for optional plus or minus sign
-					if(firstNonWhiteSpaceChar == '-')
+					if(str[firstNonWhiteSpaceChar] == '-')
 					{
 						isIntNeg = true;
 						firstNonWhiteSpaceChar++;
 					}
-					else if(firstNonWhiteSpaceChar == '+')
+					else if(str[firstNonWhiteSpaceChar] == '+')
 					{
 						firstNonWhiteSpaceChar++;
 					}
-					else
+					
+					// Set last Numeric character
+					int i = firstNonWhiteSpaceChar;
+					
+					while(i < len)
 					{
-						int i = firstNonWhiteSpaceChar;
-						
-						// Set last Numeric character
-						while(i < len)
+						asciiChar = (int)str[i] - 48;
+						if(asciiChar < 0 || asciiChar > 9)
 						{
-							asciiChar = (int)str[i] - 48;
-							if(asciiChar < 0 || asciiChar > 9)
-							{
-								break;
-							}
-							
-							i++;
+							break;
 						}
 						
-						lastNumericChar = i-1;
-						
-						// Check if lastNumericChar is lesser than firstNonWhiteSpaceChar
-						if(lastNumericChar < firstNonWhiteSpaceChar)
+						i++;
+					}
+					
+					lastNumericChar = i-1;
+					
+					// Check if lastNumericChar is lesser than firstNonWhiteSpaceChar
+					if(lastNumericChar < firstNonWhiteSpaceChar)
+					{
+						return 0;
+					}
+					
+					// Check if there are any non-whitespace chars after that
+					for(int i = lastNumericChar+1; i < len; i++)
+					{
+						if(!isspace(str[i]))
 						{
-							cout << "Last Numeric Char" << lastNumericChar << endl;
-							cout << "First Non-whitespace Char" << firstNonWhiteSpaceChar << endl;
-							cout << "No numeric chars after pos or neg sign" << endl;
 							return 0;
-						}
-						
-						// Check if there are any non-whitespace chars after that
-						for(int i = lastNumericChar+1; i < len; i++)
-						{
-							if(!isspace(str[i]))
-							{
-								cout << "Non-whitespace after pos or neg sign and after numeric chars end" << endl;
-								return 0;
-							}
 						}
 					}
 					
@@ -114,30 +102,27 @@ int myAtoi(string str);
 					// Check if number is beyond representable values
 					if(result > INT_MAX)
 					{
-						cout << "Max" << endl;
 						return INT_MAX;
 					}
 					else if(result < INT_MIN)
 					{
-						cout << "Min" << endl;
 						return INT_MIN;
 					}
 					else
 					{
-						cout << "Legit Number" << endl;
 						return (int)result;
 					}
 				}
 			}
 		}
 		
-	int main()
-	{
-		string inputStr;
+	// int main()
+	// {
+		// string inputStr;
 		
-		cout << "Enter string to convert to integer: ";
-		getline(cin, inputStr);
+		// cout << "Enter string to convert to integer: ";
+		// getline(cin, inputStr);
 		
-		cout << myAtoi(inputStr);
-	}
-// }
+		// cout << myAtoi(inputStr);
+	// }
+};
