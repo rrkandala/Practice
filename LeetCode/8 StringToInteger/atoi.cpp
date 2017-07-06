@@ -2,21 +2,21 @@
  * Date: 7/6/2017
  */
  
-// #include <iostream>
-// #include <string>
+#include <iostream>
+#include <string>
 
-// using namespace std;
+using namespace std;
 
-// int myAtoi(string str);
+int myAtoi(string str);
 
-class Solution
-{
-	public:
+// class Solution
+// {
+//	public:
 		int myAtoi(string str)
 		{
 			int len = str.length();
 			bool isIntNeg = false;
-			long result = 0;
+			long long result = 0;
 			int firstNonWhiteSpaceChar = 0;
 			int lastNumericChar = 0;
 			int asciiChar = 0;
@@ -78,20 +78,22 @@ class Solution
 						return 0;
 					}
 					
-					// Check if there are any non-whitespace chars after that
-					for(int i = lastNumericChar+1; i < len; i++)
-					{
-						if(!isspace(str[i]))
-						{
-							return 0;
-						}
-					}
+					// // Check if there are any non-whitespace chars after that
+					// for(int i = lastNumericChar+1; i < len; i++)
+					// {
+						// if(!isspace(str[i]))
+						// {
+							// return 0;
+						// }
+					// }
 					
 					// Legit integer at hand if you reached so far
 					for(int i = firstNonWhiteSpaceChar; i <= lastNumericChar; i++)
 					{
-						result = (result*10) + ((int)str[i]-48);
+						(long long)result = ((long long)result*10) + ((int)str[i]-48);
 					}
+					
+					//cout << "Result: " << result << endl;
 					
 					// Check if number is negative
 					if(isIntNeg == true)
@@ -116,13 +118,13 @@ class Solution
 			}
 		}
 		
-	// int main()
-	// {
-		// string inputStr;
+	int main()
+	{
+		string inputStr;
 		
-		// cout << "Enter string to convert to integer: ";
-		// getline(cin, inputStr);
+		cout << "Enter string to convert to integer: ";
+		getline(cin, inputStr);
 		
-		// cout << myAtoi(inputStr);
-	// }
-};
+		cout << myAtoi(inputStr);
+	}
+//}
