@@ -19,7 +19,7 @@ int main()
 	cout << "Enter regex (only * and . allowed): ";
 	getline(cin, p);
 	
-	cout << isMatch(s, p) << endl;
+	cout << (isMatch(s, p) ? "true" : "false") << endl;
 }
 
 bool isMatch(string s, string p)
@@ -30,16 +30,31 @@ bool isMatch(string s, string p)
 	int i = 0;
 	int j = 0; 
 	
-	char prevElem;
+	char prevElem = '\0';
 	
 	while(i < pLen)
 	{
+		cout << "Prev Elem: " << prevElem << endl;
+        cout << "i: " << i << endl;
+        cout << "j: " << j << endl;
+        cout << "p[i]: " << p[i] << endl;
+        cout << "s[j]: " << s[j] << endl;
+        cout << endl;
+		
 		if(p[i] != '*' && p[i] != '.')
 		{
 			if(p[i] != s[j])
 			{
-				cout << "Not matching" << endl;
-				return false;
+				// It could be that next elem is asterisk and we are fine not matching
+				if(i+1 < pLen && p[i+1] == '*')
+				{
+					cout << "Hit asterisk at next char" << endl;
+					i++;
+				}
+				else
+				{
+					return false;
+				}
 			}
 			else
 			{
@@ -105,7 +120,7 @@ bool isMatch(string s, string p)
 					{
 						if(s[j] != p[i])
 						{
-							cout << "
+							cout << "Regex not ended, string not ended but string not matching" << endl;
 							return false;
 						}
 						else
@@ -122,6 +137,7 @@ bool isMatch(string s, string p)
 	
 	if(j < sLen)
 	{
+		cout << "Still some chars left in string" << endl;
 		return false;
 	}
 	else
