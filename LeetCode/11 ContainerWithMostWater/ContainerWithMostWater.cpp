@@ -17,25 +17,35 @@ public:
 		int max = 0;
 		int area = 0;
 		int minHeight = 0;
+		int width = 0;
 		
 		for(int i = 0; i < len; i++)
 		{
-			for(int j = i+1; j < len; j++)
+			for(int j = len-1; j > i; j--)
 			{
-				if(height[i] < height[j])
+				width = j - i;
+				
+				if(max < width * height[i])
 				{
-					minHeight = height[i];
+					if(height[i] < height[j])
+					{
+						minHeight = height[i];
+					}
+					else
+					{
+						minHeight = height[j];
+					}
+					
+					area = (j-i) * minHeight;
+					
+					if(area > max)
+					{
+						max = area;
+					}
 				}
 				else
 				{
-					minHeight = height[j];
-				}
-				
-				area = (j-i) * minHeight;
-				
-				if(area > max)
-				{
-					max = area;
+					break;
 				}
 			}
 		}
