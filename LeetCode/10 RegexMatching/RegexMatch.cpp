@@ -71,6 +71,11 @@ bool isMatch(string s, string p)
 		}
 		else if(p[i] == '*')
 		{
+			if(i-1 >= 0)
+			{
+				prevElem = p[i-1];
+			}
+			
 			i++;
 			
 			// End of regex expression
@@ -103,6 +108,16 @@ bool isMatch(string s, string p)
 					{
 						j++;
 					}
+				}
+				// It could be that prevElem and nextElem of asterisk is same
+				else if(p[i] == prevElem)
+				{
+					while(j < sLen && s[j] == prevElem)
+					{
+						j++;
+					}
+					
+					j--;
 				}
 				else
 				{
