@@ -22,11 +22,15 @@ public:
 		while(n > 0)
 		{
 			remainder = n % 10;
-			roman = GetRoman(remainder * counter);
 			
-			if(roman != "")
+			if(remainder != 0)
 			{
-				ans.insert(0, roman);
+				roman = GetRoman(remainder * counter);
+				
+				if(roman != "")
+				{
+					ans.insert(0, roman);
+				}
 			}
 			n = n / 10;
 			counter = counter * 10;
@@ -40,21 +44,28 @@ public:
 		int quotient = 0;
 		int base = 0;
 		string c;
+		string res;
 		
 		if(val >= 1000)
 		{
 			base = 1000;
-			c = 'M';
+			c = "M";
 		}
 		else if(val >= 900)
 		{
-			c = 'CM';
+			c = "CM";
 			return c;
 		}
 		else if(val >= 500)
 		{
-			base = 500;
+			val = val - 500;
+			base = 100;
 			c = "D";
+			
+			res.append(c);
+			res.append(GetRoman(val));
+			
+			return res;
 		}
 		else if(val >= 400)
 		{
@@ -73,8 +84,15 @@ public:
 		}
 		else if(val >= 50)
 		{
-			base = 50;
+			val = val - 50;
+			base = 10;
 			c = "L";
+			
+			res.append(c);
+			res.append(GetRoman(val));
+			
+			return res;
+
 		}
 		else if(val >= 40)
 		{
@@ -93,8 +111,15 @@ public:
 		}
 		else if(val >= 5)
 		{
-			base = 5;
+			val = val - 5;
+			base = 1;
 			c = "V";
+			
+			res.append(c);
+			res.append(GetRoman(val));
+			
+			return res;
+
 		}
 		else if(val >= 4)
 		{
@@ -108,12 +133,12 @@ public:
 		}
 		else
 		{
-			base = 0;
+			base = 1;
 			c = "";
+			res = "";
 		}
 		
-		quotient = val / base;
-		string res; 
+		quotient = val / base; 
 		
 		for(int i = 0; i < quotient; i++)
 		{
